@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -57,16 +58,16 @@ camera.attachControl(canvas, true);
     //    camera.attachControl(canvas, true);
         const light1 = new BABYLON.PointLight("light1", new BABYLON.Vector3(1, 1, 0));
         light1.diffuse = new BABYLON.Color3(1,0,2)
-        light1.intensity = 1;
+        light1.intensity = 0.5;
         const light2 = new BABYLON.PointLight("light2", new BABYLON.Vector3(1, 1, 1));
         light2.diffuse = new BABYLON.Color3(3,2,2)
-        light2.intensity = 1;
+        light2.intensity = 0.5;
         const light3 = new BABYLON.PointLight("light3", new BABYLON.Vector3(1, 4, 0));
         light3.diffuse = new BABYLON.Color3(1,0,0)
-        light3.intensity = 1;
+        light3.intensity = 0.5;
      
         
-       const envTex = new BABYLON.CubeTexture("./sky.env", scene);
+       const envTex = new BABYLON.CubeTexture("./envsky.env", scene);
        scene.environmentTexture = envTex;
        scene.createDefaultSkybox(envTex, true);
 
@@ -121,7 +122,7 @@ var mat1 = new BABYLON.StandardMaterial("", scene);
         var ground = BABYLON.MeshBuilder.CreateBox("ground", {height: 5, width: 1025, depth: 1025}, scene)
         ground.position = new BABYLON.Vector3(0,-50,0);
         ground.material = pbr;
-        pbr.roughness = 1;
+        pbr.roughness = -150;
 
     //testing this code to create a graph    
     var mat3 = new BABYLON.StandardMaterial("", scene);
@@ -130,28 +131,44 @@ var mat1 = new BABYLON.StandardMaterial("", scene);
 //testing the api    
 
 const one = [];
+const threebabylon = [];
+const fourbabylon = [];
 async function a1() {
-    const response = await fetch("https://jsonplaceholder.typicode.com/users");
+    const response = await fetch('/api/endpoint')
     const data = await response.json();
+
     const print = data.map(function(item){
-        one.push(item.id)
+        one.push(item.Score1, item.Score2, item.Score3, item.Score4, item.Score5, item.Score6, item.Score7)
     })
 
 
-    var jc = one
+//---------
+
+ const one1 = one.flat()
+
+ const one2 = one1.splice(0,7)   
+
+
+
+ //----------------
+
+console.log(one2)
+    var jc = one2
     var myPoints1 = [];
 
 for(var i = 0; i<jc.length; i++){
-    myPoints1.push(new BABYLON.Vector3(-5, jc[i], 20))
+    myPoints1.push(new BABYLON.Vector3(-5, jc, 20))
 
 }
+
 
     var line3 = BABYLON.MeshBuilder.CreateTube("line3", {path: myPoints1, radius: 1.2, sideOrientation: BABYLON.Mesh.DOUBLESIDE}, scene)
     line3.material = mat3;
 
-
 }
 a1();
+
+
 
 //the end of the api test section
 
@@ -248,3 +265,4 @@ camera.lockedTarget = line1;
 
 </body>
 </html>
+
