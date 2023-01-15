@@ -133,6 +133,9 @@ var mat1 = new BABYLON.StandardMaterial("", scene);
 const one = [];
 const threebabylon = [];
 const fourbabylon = [];
+
+
+
 async function a1() {
     const response = await fetch('/api/endpoint')
     const data = await response.json();
@@ -141,23 +144,25 @@ async function a1() {
         one.push(item.Score1, item.Score2, item.Score3, item.Score4, item.Score5, item.Score6, item.Score7)
     })
 
-
+    const print1 = one.map(function(item){
+        return item*10
+    })
 //---------
 
- const one1 = one.flat()
+ const one1 = print1.flat()
 
- const one2 = one1.splice(0,7)   
+ const one2 = one1.splice(one1.length-7, 7)   
 
 
 
  //----------------
 
 console.log(one2)
-    var jc = one2
-    var myPoints1 = [];
+    
+var myPoints1 = [];
 
-for(var i = 0; i<jc.length; i++){
-    myPoints1.push(new BABYLON.Vector3(-5, jc, 20))
+for(var i = 0; i<one2.length; i++){
+    myPoints1.push(new BABYLON.Vector3(30, 30, one2[i]))
 
 }
 
