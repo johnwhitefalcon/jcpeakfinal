@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -133,6 +134,8 @@ var mat1 = new BABYLON.StandardMaterial("", scene);
 const one = [];
 const threebabylon = [];
 const fourbabylon = [];
+const forinloop1 = [];
+const forinloop2 = [];
 
 
 
@@ -140,24 +143,47 @@ async function a1() {
     const response = await fetch('/api/endpoint')
     const data = await response.json();
 
-    const print = data.map(function(item){
-        one.push(item.Score1, item.Score2, item.Score3, item.Score4, item.Score5, item.Score6, item.Score7)
+
+const pr = Object.keys(data).length-1
+
+
+const pp = data.map(function(item){
+    return item
+})
+
+const finalcut = pp[pr]
+
+
+for (var i in finalcut) {
+    let keyVal = finalcut[i];
+    forinloop1.push(keyVal);
+}
+
+
+
+    const print = forinloop1.map(function(item){
+        one.push(item)
     })
+
+    const printdel = one.splice(0, 1)
+
 
     const print1 = one.map(function(item){
         return item*10
     })
+
+   console.log(one) 
 //---------
 
  const one1 = print1.flat()
 
- const one2 = one1.splice(one1.length-7, 7)   
+ const one2 = one1.splice(one1.length-one1.length, one1.length)   
 
 
 
  //----------------
 
-console.log(one2)
+//console.log(one2)
     
 var myPoints1 = [];
 
@@ -270,4 +296,6 @@ camera.lockedTarget = line1;
 
 </body>
 </html>
+
+
 
