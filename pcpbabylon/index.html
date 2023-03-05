@@ -1,0 +1,301 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=5.0">
+    <title>Document</title>
+    <style>
+        html, body {
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        #renderCanvas {
+            width: 100%;
+            height: 100%;
+            touch-action: none;
+        }
+    </style>
+
+
+
+ 
+</head>
+<body>
+    
+    <canvas id="renderCanvas" touch-action="none"></canvas> 
+    
+
+    <script src = "https://cdn.babylonjs.com/babylon.js"></script>
+    <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
+
+
+
+<script>
+
+    const canvas = document.getElementById("renderCanvas");
+    const engine = new BABYLON.Engine(canvas, true); 
+    
+    
+    const createScene = function () {
+
+        const scene = new BABYLON.Scene(engine);  
+const camera = new BABYLON.FollowCamera("followCam", new BABYLON.Vector3(0, -22, 200), scene);
+camera.heightOffset = 10;
+camera.radius = 195;
+camera.rotationOffset = -110;
+camera.cameraAcceleration = 0.005;
+camera.maxCameraSpeed = 10;
+camera.attachControl(canvas, true);
+
+
+    //    const camera = new BABYLON.ArcRotateCamera("camera", 10,1.5,200, new BABYLON.Vector3(0, 0, 0));
+    //    camera.attachControl(canvas, true);
+        const light1 = new BABYLON.PointLight("light1", new BABYLON.Vector3(1, 1, 0));
+        light1.diffuse = new BABYLON.Color3(1,0,2)
+        light1.intensity = 0.5;
+        const light2 = new BABYLON.PointLight("light2", new BABYLON.Vector3(1, 1, 1));
+        light2.diffuse = new BABYLON.Color3(3,2,2)
+        light2.intensity = 0.5;
+        const light3 = new BABYLON.PointLight("light3", new BABYLON.Vector3(1, 4, 0));
+        light3.diffuse = new BABYLON.Color3(1,0,0)
+        light3.intensity = 0.5;
+     
+        
+       const envTex = new BABYLON.CubeTexture("./envsky.env", scene);
+       scene.environmentTexture = envTex;
+       scene.createDefaultSkybox(envTex, true);
+
+
+
+var mat1 = new BABYLON.StandardMaterial("", scene);
+    mat1.diffuseColor = new BABYLON.Color3(0.9, 0.02, 0.02);
+
+        var myPoints = [
+            new BABYLON.Vector3(0, -28, 180),
+            new BABYLON.Vector3(0, 90, 180),
+
+      
+
+        ];
+
+
+
+        var line1 = BABYLON.MeshBuilder.CreateTube("line1", {path: myPoints, radius: 1.5, sideOrientation: BABYLON.Mesh.DOUBLESIDE}, scene)
+        line1.material = mat1;
+
+
+
+        var mat1 = new BABYLON.StandardMaterial("", scene);
+    mat1.diffuseColor = new BABYLON.Color3(0.9, 0.02, 0.02);
+
+        var myPoints2 = [
+            new BABYLON.Vector3(10, -30, 181),
+            new BABYLON.Vector3(50, -30, -50),
+      
+
+        ];
+
+
+        var line2 = BABYLON.MeshBuilder.CreateTube("line2", {path: myPoints2, radius: 1.5, sideOrientation: BABYLON.Mesh.DOUBLESIDE}, scene)
+        line2.material = mat1;
+
+
+
+
+
+
+
+
+
+
+
+
+    var pbr = new BABYLON.PBRMaterial("pbr", scene);
+    pbr.albedoTexture = new BABYLON.Texture("./asphalt.jpg", scene);
+
+        var ground = BABYLON.MeshBuilder.CreateBox("ground", {height: 5, width: 1025, depth: 1025}, scene)
+        ground.position = new BABYLON.Vector3(0,-50,0);
+        ground.material = pbr;
+        pbr.roughness = -150;
+
+    //testing this code to create a graph    
+    var mat3 = new BABYLON.StandardMaterial("", scene);
+    mat3.diffuseColor = new BABYLON.Color3(0.9, 0.02, 0.02);
+
+//testing the api    
+
+const one = [];
+const threebabylon = [];
+const fourbabylon = [];
+const forinloop1 = [];
+const forinloop2 = [];
+
+
+
+async function a1() {
+    const response = await fetch('/api/endpoint')
+    const data = await response.json();
+
+
+const pr = Object.keys(data).length-1
+
+
+const pp = data.map(function(item){
+    return item
+})
+
+const finalcut = pp[pr]
+
+
+for (var i in finalcut) {
+    let keyVal = finalcut[i];
+    forinloop1.push(keyVal);
+}
+
+
+
+    const print = forinloop1.map(function(item){
+        one.push(item)
+    })
+
+    const printdel = one.splice(0, 1)
+
+
+    const print1 = one.map(function(item){
+        return item*10
+    })
+
+   console.log(one) 
+//---------
+
+ const one1 = print1.flat()
+
+ const one2 = one1.splice(one1.length-one1.length, one1.length)   
+
+
+
+ //----------------
+
+//console.log(one2)
+    
+var myPoints1 = [];
+
+for(var i = 0; i<one2.length; i++){
+    myPoints1.push(new BABYLON.Vector3(30, 30, one2[i]))
+
+}
+
+
+    var line3 = BABYLON.MeshBuilder.CreateTube("line3", {path: myPoints1, radius: 1.2, sideOrientation: BABYLON.Mesh.DOUBLESIDE}, scene)
+    line3.material = mat3;
+
+}
+a1();
+
+
+
+//the end of the api test section
+
+
+
+// animation
+
+    const startFrame = 0;
+    const endFrame = 10;
+    const frameRate = 10;
+
+    const xSlide = new BABYLON.Animation("xSlide", "position", frameRate, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+    const keyFrames = [];
+
+    keyFrames.push({
+        frame: 0,
+        value: new BABYLON.Vector3(0,0,0)
+
+    });
+
+    keyFrames.push({
+        frame: 5,
+        value: new BABYLON.Vector3(0,0,0)
+
+    });
+
+    keyFrames.push({
+        frame: endFrame,
+        value: new BABYLON.Vector3(9,0,0)
+
+    });
+
+    xSlide.setKeys(keyFrames);
+    line1.animations.push(xSlide);
+    scene.beginAnimation(line1, startFrame, endFrame, false);
+
+//.camera animation.................................................
+
+
+    const startFrameCam = 0;
+    const endFrameCam = 10;
+    const frameRateCam = 10;
+
+    const xCam = new BABYLON.Animation("xCam", "position", frameRate, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+    const keyFramesCam = [];
+
+    keyFramesCam.push({
+        frame: 0,
+        value: new BABYLON.Vector3(-500,200,200)
+
+    });
+
+    keyFramesCam.push({
+        frame: 5,
+        value: new BABYLON.Vector3(-400,150,150)
+
+    });
+
+    keyFramesCam.push({
+        frame: endFrame,
+        value: new BABYLON.Vector3(-250,100,100)
+
+    });
+
+    xCam.setKeys(keyFramesCam);
+    camera.animations.push(xCam);
+    scene.beginAnimation(camera, startFrame, endFrame, false);
+
+// Camera to follow 
+
+camera.lockedTarget = line1;
+
+
+
+        return scene;
+    };
+
+    const scene = createScene(); 
+    
+    
+    engine.runRenderLoop(function () {
+            scene.render();
+           
+    });
+
+    
+    window.addEventListener("resize", function () {
+            engine.resize();
+    });
+</script>
+
+
+
+
+</body>
+</html>
+
+
+
